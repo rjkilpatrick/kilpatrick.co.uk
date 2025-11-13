@@ -19,7 +19,7 @@ The version of jekyll and liquid [available](//pages.github.com/versions/) was v
 The file-based routing was very useful, but is cluttered amongst the project dependencies.
 
 I had recently been learning React and the idea of composing from components, rather than inheriting from layouts started to really appeal to me.
-The [project at the time](//github.com/rjkilpatrick/rjkilpatrick.uk/tree/f20e31fbb1fea962d17cfd06058183b568cec23a) had a lot of repeated code, and was poorly managed, which meant I never put the effort in to making the site look and feel good, which meant that I didn't have much motivation to write blog posts.
+The [project at the time](//github.com/rjkilpatrick/kilpatrick.co.uk/tree/f20e31fbb1fea962d17cfd06058183b568cec23a) had a lot of repeated code, and was poorly managed, which meant I never put the effort in to making the site look and feel good, which meant that I didn't have much motivation to write blog posts.
 
 For the tagged pages I created, I had to make a separate page for each.
 

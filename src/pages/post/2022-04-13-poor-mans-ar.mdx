@@ -8,7 +8,7 @@ tags: ["ar"]
 
 import Figure from "../../components/Figure.astro";
 
-**tl;dr:** Give it a go [here](//rjkilpatrick.uk/virtual-window).
+**tl;dr:** Give it a go [here](//kilpatrick.co.uk/virtual-window).
 
 ## Introduction
 
@@ -31,7 +31,7 @@ This inspired me greatly
   alt="Screenshot of Lucy angel model"
 >
   Screenshot of Lucy angel model in faux-augemented reality. Try it
-  [here](//rjkilpatrick.uk/virtual-window).
+  [here](//kilpatrick.co.uk/virtual-window).
 </Figure>
 
 Using a pre-trained model (PoseNet) using [ml5js](//ml5js.org/) we estimate eye-position to move a virtual camera (in a plane) around a scene, and then use ThreeJS to render the screen from this eye position, as if you were really moving around the virtual scene.
@@ -124,7 +124,7 @@ The scene isn't particularly impressive, the post that inspired me looks far nic
 I think a scene selection would be nice.
 
 When I have time, I'll remake this in [React Three Fiber](//github.com/pmndrs/react-three-fiber) because I love declaritive functional programming.
-It also makes sense, now I am using astro for [this site](./2022-12-30-rjkilpatrick.uk), so that I can use the JS packages so that I'm not hotlinking to [CDNs](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) for my dependencies.
+It also makes sense, now I am using astro for [this site](./2022-12-30-kilpatrick.co.uk), so that I can use the JS packages so that I'm not hotlinking to [CDNs](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) for my dependencies.
 
 I think removing the dependency on ml5js would be good, it doesn't add that much abstraction over the original [tensorflow js implementation](https://www.npmjs.com/package/@tensorflow-models/posenet), so I think it might be worth moving to that.
 

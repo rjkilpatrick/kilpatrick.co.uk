@@ -26,13 +26,13 @@ import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://rjkilpatrick.uk",
+  site: "https://kilpatrick.co.uk",
   base: "",
   integrations: [
     mdx(),
     react(),
     sitemap({
-      customPages: ["https://rjkilpatrick.uk/virtual-window"],
+      customPages: ["https://kilpatrick.co.uk/virtual-window"],
     }),
     prefetch(),
   ],
