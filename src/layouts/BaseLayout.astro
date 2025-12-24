@@ -21,6 +21,12 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     {title ? <title>{title}</title> : <title>John Kilpatrick</title>}
+    <meta name="description" content="I'm John Kilpatrick, an Optical Engineer. I write about optics, physics, and technology.">
+    <meta property="og:title" content="{title ? {title} : John Kilpatrick}">
+    <meta property="og:description" content="Engineer, researcher, and writer. Exploring optics, science, and technology.">
+    <meta property="og:image" content="/assets/img/rjkilpatrick.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kilpatrick.co.uk/">
 
     {/* Meta */}
     <meta name="twitter:creator" content="rjkilpatrick1" />
