@@ -3,10 +3,10 @@ const { tags } = Astro.props;
 ---
 
 {
-  tags ? (
+  tags && tags.length > 0 ? (
     <ul class="post-tags">
       {tags.map((tag) => (
-        <li class="post-tag">
+        <li>
           <a href={`/tags/${tag}`}>#{tag}</a>
         </li>
       ))}
@@ -18,12 +18,25 @@ const { tags } = Astro.props;
   .post-tags {
     list-style: none;
     display: flex;
-    gap: 1em;
-  }
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
 
-  .post-tag {
-    padding: 1em;
-    border-radius: 5px;
-    background-color: bisque;
+    a {
+      display: inline-block;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background-color: var(--background-secondary);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+
+      &:hover {
+        background-color: var(--accent-1);
+        color: white;
+      }
+    }
   }
 </style>

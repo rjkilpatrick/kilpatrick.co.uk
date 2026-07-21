@@ -27,6 +27,18 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 import icon from "astro-icon";
 
+import { toString } from "mdast-util-to-string";
+
+// Estimates reading time from the parsed markdown and exposes it to the
+// layout as `frontmatter.minutesRead`, at ~200 words per minute.
+function remarkReadingTime() {
+  return (tree, { data }) => {
+    const words = toString(tree).trim().split(/\s+/).filter(Boolean).length;
+    const minutes = Math.max(1, Math.round(words / 200));
+    data.astro.frontmatter.minutesRead = `${minutes} min read`;
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://kilpatrick.co.uk",
@@ -42,7 +54,7 @@ export default defineConfig({
   ],
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkMath],
+      remarkPlugins: [remarkMath, remarkReadingTime],
       rehypePlugins: [rehypeKatex, rehypeSlug, rehypeAutolinkHeadings],
       remarkRehype: {
         footnoteLabel: "References",

@@ -5,184 +5,212 @@ export const links = [
   { title: "About", url: "/about" },
   { title: "Contact", url: "/contact" },
 ];
+
+const { pathname } = Astro.url;
+const isActive = (url: string) =>
+  url === "/" ? pathname === "/" : pathname.startsWith(url);
 ---
 
 <nav class="page-navigation" role="navigation">
-  <div class="modal">
-    <ul class="modal-content">
+  <div class="nav-bar">
+    <a href="/" class="brand">Kilpatrick.co.uk</a>
+
+    <ul class="nav-links">
       {
         links.map((link) => (
-          <li class="nav-item">
-            <a href={link.url}>{link.title}</a>
+          <li>
+            <a href={link.url} aria-current={isActive(link.url) && "page"}>
+              {link.title}
+            </a>
           </li>
         ))
       }
     </ul>
+
+    <details class="mobile-menu">
+      <summary aria-label="Main Menu">
+        <span class="hamburger-icon"></span>
+      </summary>
+      <ul class="mobile-links">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.url} aria-current={isActive(link.url) && "page"}>
+                {link.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
   </div>
-  <button
-    class="toggle-container"
-    aria-expanded="false"
-    aria-controls="menu"
-    aria-label="Main Menu"
-  >
-    <span class="hamburger"></span>
-  </button>
 </nav>
 
-<script type="text/javascript">
-  const toggle = document.querySelector(".toggle-container");
-  const modal = document.querySelector(".modal");
-  const icon = document.querySelector(".hamburger");
-
-  function toggleNav(event) {
-    event.preventDefault();
-
-    modal.classList.toggle("active");
-
-    // Expand
-    toggle.setAttribute(
-      "aria-expanded",
-      toggle.getAttribute("aria-expanded") == "true" ? "false" : "true"
-    );
-
-    icon.classList.toggle("active");
-  }
-
-  toggle.addEventListener("touchstart", toggleNav);
-  toggle.addEventListener("click", toggleNav);
-</script>
 <style lang="scss">
   .page-navigation {
-    // Aesthetics
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-
-    a {
-      color: white;
-      text-decoration: none;
-    }
-  }
-
-  .toggle-container {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    width: 64px;
-    height: 64px;
-
-    z-index: 100;
-  }
-
-  .modal {
-    text-align: center;
-    font-size: 3rem;
-    background-color: var(--background-secondary);
-
-    position: fixed;
+    position: sticky;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
+    z-index: 100;
+    width: 100%;
+    background-color: var(--background-primary);
+    border-bottom: 1px solid var(--background-secondary);
+  }
 
-    transform: translateY(-100vh);
-    transition: transform ease-in-out 750ms;
+  .nav-bar {
+    position: relative;
+    max-width: 80ch;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
 
-    &.active {
-      transform: translate(0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-emph);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--accent-1);
     }
   }
 
-  .modal-content {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  // Desktop links
+  .nav-links {
+    display: none;
+    list-style: none;
+    align-items: center;
+    gap: 1.75rem;
     margin: 0;
     padding: 0;
-    list-style: none;
 
     a {
-      display: block;
-      width: inherit;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 1rem;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        color: var(--text-emph);
+      }
+
+      &[aria-current="page"] {
+        color: var(--text-emph);
+        border-bottom-color: var(--accent-1);
+      }
     }
   }
 
-  .toggle-container {
-    border: none;
-    cursor: pointer;
-    background-color: inherit;
-    padding: 0; // Fix button depress moving the icon
-  }
-
-  .hamburger {
-    background-color: var(--text-primary);
-    &:hover {
-      background-color: var(--text-emph);
-    }
-    transition: all 0.2s ease;
-    border-radius: 50px;
+  // Mobile disclosure menu (native <details>, no JS needed)
+  .mobile-menu {
     display: block;
-    height: 8px;
-    position: absolute;
-    width: inherit;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      list-style: none;
+      cursor: pointer;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    .mobile-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background-color: var(--background-secondary);
+      border-bottom: 1px solid var(--background-primary);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+
+      list-style: none;
+      margin: 0;
+      padding: 0.5rem 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+
+      a {
+        display: block;
+        padding: 0.7rem 0;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 1.1rem;
+
+        &:hover {
+          color: var(--text-emph);
+        }
+
+        &[aria-current="page"] {
+          color: var(--accent-1);
+        }
+      }
+    }
+  }
+
+  .hamburger-icon {
+    position: relative;
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--text-emph);
+    transition: background-color 0.15s ease;
 
     &::before,
     &::after {
       content: "";
-      background-color: var(--text-primary);
-      &:hover {
-        background-color: var(--text-emph);
-      }
-      border-radius: 50px;
-      display: block;
-      height: 8px;
-      left: 0;
       position: absolute;
-      width: 100%;
-      transition: all 0.2s ease;
-    }
-
-    &.active {
-      background-color: #00000000;
-
-      &::before {
-        top: 0;
-        transform: rotate(-45deg);
-      }
-
-      &::after {
-        bottom: 0;
-        transform: rotate(45deg);
-      }
+      left: 0;
+      width: 22px;
+      height: 2px;
+      border-radius: 2px;
+      background-color: var(--text-emph);
+      transition: transform 0.15s ease, top 0.15s ease, opacity 0.15s ease;
     }
 
     &::before {
-      top: -20px;
+      top: -7px;
     }
 
     &::after {
-      bottom: -20px;
+      top: 7px;
     }
   }
 
-  .hamburger.active,
-  .hamburger::before.active,
-  .hamburger::after.active {
-    background-color: var(--background-primary);
+  // Turn the hamburger into a close icon while the menu is open
+  .mobile-menu[open] .hamburger-icon {
+    background-color: transparent;
+
+    &::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
   }
 
-  .nav-item > a:visited,
-  .nav-item > a:link {
-    color: var(--text-secondary);
-    &:hover {
-      color: var(--text-emph);
+  @media screen and (min-width: 768px) {
+    .nav-links {
+      display: flex;
+    }
+
+    .mobile-menu {
+      display: none;
     }
   }
 </style>

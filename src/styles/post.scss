@@ -122,20 +122,43 @@ figure {
   }
 }
 
-// Sort out link for permalinking
-article h2 {
+// Permalink icons injected by rehype-autolink-headings
+article :is(h1, h2, h3, h4, h5, h6) {
   position: relative;
 
-  &>a {
-    border: 2.5px solid #c917a2;
-    width: 1rem;
-    height: 1rem;
+  &>a[aria-hidden="true"] {
     position: absolute;
-    left: calc(-1rem - 8px);
-    top: calc(50% - 0.5rem);
+    left: -1.25em;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    opacity: 0.4;
+    transition: opacity 0.15s ease, color 0.15s ease;
+
+    .icon-link {
+      display: block;
+      width: 1em;
+
+      &::before {
+        content: "#";
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+        color: var(--text-secondary);
+      }
+    }
 
     &:hover {
-      display: block;
+      opacity: 1;
+
+      .icon-link::before {
+        color: var(--accent-1);
+      }
     }
+  }
+
+  &:hover>a[aria-hidden="true"] {
+    opacity: 0.7;
   }
 }

@@ -1,75 +1,264 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import { Icon } from "astro-icon/components";
+
+const postModules = import.meta.glob("./post/**/*.{md,mdx}", { eager: true });
+const posts = Object.values(postModules)
+  .filter((post) => !post.frontmatter?.draft)
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.datePublished).getTime() -
+      new Date(a.frontmatter.datePublished).getTime()
+  )
+  .slice(0, 3);
 ---
 
 <PageLayout>
-  <div class="main">
-    <div class="half-pane-wrapper">
-      <div class="half-pane grow">
-        <h1>Hi, I'm John 👋</h1>
-        <h2>
-          I'm an Optical Engineer at <a href="//andor.com/">Oxford Instruments Andor</a>.
-        </h2>
-        <p>
-          Why don't you check out my <a href="/post">blog</a>?
-        </p>
-      </div>
-      <div class="half-pane">
-        <img
-          class="avatar"
-          src="/assets/img/rjkilpatrick.jpg"
-          alt="Picture of John Kilpatrick"
-        />
+  <section class="hero">
+    <div class="hero__text">
+      <h1><span class="highlight">Hi,</span> I'm John 👋</h1>
+      <p class="lede">
+        I'm an Optical Engineer in Belfast, currently at <a href="//andor.com/">Andor</a>.
+        PhD Physics with interests in optics, holography, and computational imaging.
+      </p>
+      <p>
+        I spend my spare time writing about science and tech on my <a href="/post">blog</a>.
+      </p>
+      <div class="social-row">
+        <a
+          class="social-icon"
+          rel="external"
+          aria-label="Github"
+          href="//github.com/rjkilpatrick"
+        >
+          <Icon name="mdi:github" />
+        </a>
+        <a
+          class="social-icon"
+          rel="external"
+          aria-label="Linkedin"
+          href="//linkedin.com/in/rjkilpatrick"
+        >
+          <Icon name="mdi:linkedin" />
+        </a>
       </div>
     </div>
-  </div>
+    <div class="hero__image">
+      <img
+        src="/assets/img/rjkilpatrick.jpg"
+        alt="Picture of John Kilpatrick"
+      />
+    </div>
+  </section>
+
+  <section class="posts" aria-labelledby="posts-heading">
+    <h2 id="posts-heading">Recent writing</h2>
+    <div class="posts__grid">
+      {
+        posts.map((post) => (
+          <a class="post-card" href={post.url}>
+            <span class="post-card__date">
+              {new Date(post.frontmatter.datePublished).toLocaleDateString(
+                "en-gb",
+                { year: "numeric", month: "short", day: "numeric" }
+              )}
+            </span>
+            <h3>{post.frontmatter.title}</h3>
+            {post.frontmatter.preview ? (
+              <p>{post.frontmatter.preview}</p>
+            ) : null}
+          </a>
+        ))
+      }
+    </div>
+    <a class="all-posts" href="/post">Read all posts &rarr;</a>
+  </section>
+
+  <section class="contact-cta">
+    <h2>Wanna get in touch?</h2>
+    <p>I'm always up for a chat about optics, side projects, or otherwise.</p>
+    <a class="contact-button" href="/contact">Get in touch</a>
+  </section>
 </PageLayout>
+
 <style lang="scss">
-  .half-pane-wrapper {
-    display: flex;
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
-    padding: 1em;
-    flex-direction: column-reverse;
+    gap: 2rem;
+    padding: 2rem 0 3rem;
+
     @media screen and (min-width: 768px) {
-      gap: 2em;
-      flex-direction: row;
+      grid-template-columns: 3fr 2fr;
+      gap: 3rem;
+      padding: 3rem 0 4rem;
     }
   }
 
-  .half-pane {
+  .hero__text {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
-  }
+    gap: 1rem;
 
-  .grow {
-    flex-grow: 1;
-  }
+    h1 {
+      font-size: 2.75rem;
+      margin: 0;
 
-  img.avatar {
-    border-radius: 50%;
-    height: 100%;
-    max-height: 30vh;
-    @media screen and (min-width: 768px) {
-      max-height: 50vh;
+      @media screen and (min-width: 768px) {
+        font-size: 3.5rem;
+      }
+    }
+
+    .lede {
+      font-size: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 0;
     }
   }
 
-  .main {
-    font-family: "Inter", sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 0;
-    padding: 0;
-    justify-content: center;
-    width: 100%;
-    flex-grow: 1;
-    max-width: 80vw;
+  .highlight {
+    color: var(--accent-1);
   }
 
-  :root {
-    --primary-color: #e50914;
+  .hero__image {
+    order: -1;
+    display: flex;
+    justify-content: center;
+
+    @media screen and (min-width: 768px) {
+      order: 1;
+      justify-content: flex-end;
+    }
+
+    img {
+      width: 60%;
+      max-width: 260px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 1rem;
+
+      @media screen and (min-width: 768px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .social-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background-color: var(--text-emph);
+    color: var(--background-primary);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--accent-1);
+    }
+
+    :global(svg) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  section.posts,
+  section.contact-cta {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--background-secondary);
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .posts__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media screen and (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    background-color: var(--background-secondary);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: var(--text-emph);
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+  }
+
+  .post-card__date {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+  }
+
+  .all-posts {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .contact-cta {
+    text-align: left;
+
+    p {
+      font-size: 1.1rem;
+      max-width: 60ch;
+    }
+  }
+
+  .contact-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--accent-1);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
   }
 </style>

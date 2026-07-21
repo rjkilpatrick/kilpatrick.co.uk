@@ -5,14 +5,15 @@ import "../styles/post.scss";
 
 import "@fontsource/space-mono";
 
-const { title, datePublished, tags } = Astro.props.frontmatter;
+const { title, datePublished, tags, minutesRead } = Astro.props.frontmatter;
 ---
 
 <PageLayout title={title}>
+  <a class="back-link" href="/post">&larr; Back to blog</a>
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1>{title}</h1>
-      <p>
+      <p class="post-meta">
         <date datetime={datePublished} itemprop="datePublished">
           {
             new Date(datePublished).toLocaleDateString("en-gb", {
@@ -23,21 +24,74 @@ const { title, datePublished, tags } = Astro.props.frontmatter;
             })
           }
         </date>
-        ⦁
-        {"3 minute read."}
+        {minutesRead ? <span class="post-meta__dot">&middot;</span> : null}
+        {minutesRead}
       </p>
       {tags ? <Tags tags={tags} /> : null}
     </header>
     <slot />
-    <!--Comments on post using GitHub account-->
-    <script
-      src="https://utteranc.es/client.js"
-      repo="rjkilpatrick/kilpatrick.co.uk"
-      issue-term="pathname"
-      label="comment"
-      theme="preferred-color-scheme"
-      crossorigin="anonymous"
-      async
-    ></script>
+    <section class="comments">
+      <h2>Discussion</h2>
+      <!--Comments on post using GitHub account-->
+      <script
+        src="https://utteranc.es/client.js"
+        repo="rjkilpatrick/kilpatrick.co.uk"
+        issue-term="pathname"
+        label="comment"
+        theme="preferred-color-scheme"
+        crossorigin="anonymous"
+        async
+      ></script>
+    </section>
   </article>
 </PageLayout>
+
+<style lang="scss">
+  .back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+
+    &:hover {
+      color: var(--accent-1);
+    }
+  }
+
+  .post {
+    header {
+      padding: 1.5rem 0 2rem;
+
+      h1 {
+        font-size: 2.5rem;
+        margin: 0 0 0.5rem;
+
+        @media screen and (min-width: 768px) {
+          font-size: 3rem;
+        }
+      }
+    }
+  }
+
+  .post-meta {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .post-meta__dot {
+    margin: 0 0.4em;
+  }
+
+  .comments {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--background-secondary);
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+</style>

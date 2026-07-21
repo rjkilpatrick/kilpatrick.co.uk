@@ -13,10 +13,13 @@ const title = "Blog";
 ---
 
 <PageLayout title={title}>
-  <h1>Blog</h1>
+  <header class="blog-header">
+    <h1>Blog</h1>
+    <p>Writing about optics, holography, and the odd side project.</p>
+  </header>
   <section>
     {
-      posts ? (
+      posts.length ? (
         posts
           // Reverse chronological order
           .sort(
@@ -31,3 +34,28 @@ const title = "Blog";
     }
   </section>
 </PageLayout>
+
+<style lang="scss">
+  .blog-header {
+    padding: 2rem 0 1rem;
+
+    h1 {
+      font-size: 2.75rem;
+      margin: 0 0 0.5rem;
+    }
+
+    p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+      padding: 3rem 0 1.5rem;
+
+      h1 {
+        font-size: 3.25rem;
+      }
+    }
+  }
+</style>
