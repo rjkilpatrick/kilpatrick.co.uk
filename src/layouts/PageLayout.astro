@@ -10,17 +10,18 @@ import "../styles/post.scss";
 
 export interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={title} description={description}>
   <Loading />
   <Navigation />
   <main class="content-wrapper">
     <slot />
   </main>
   <Footer />
-  <Analytics/>
+  <Analytics />
 </BaseLayout>

@@ -1,7 +1,7 @@
 blockquote {
   border-left: 0.5rem solid var(--background-secondary);
   color: var(--text-secondary);
-  padding: 0.5rem 0px 0.5rem 1.5rem;
+  padding: 0.5rem 0 0.5rem 1.5rem;
   margin: 0;
 }
 
@@ -13,7 +13,6 @@ blockquote {
 .astro-code {
   padding: 1rem 2rem 1rem 0.5rem;
   border-radius: 5px;
-
   counter-reset: linenumber;
   counter-increment: linenumber calc(var(--line-start, 1) - 1);
 
@@ -22,7 +21,7 @@ blockquote {
 
     &::before {
       content: counter(linenumber);
-      color: rgba(255, 255, 255, 0.322);
+      color: rgb(255 255 255 / 32.2%);
       width: 2rem;
       margin-right: 1.5rem;
       display: inline-block;
@@ -40,7 +39,6 @@ abbr {
 }
 
 article {
-
   h1,
   h2 {
     margin-bottom: 0;
@@ -54,25 +52,25 @@ article {
     margin-top: 1rem;
   }
 
-  h1+p,
-  h2+p,
-  h3+p,
-  h4+p,
-  h5+p,
-  h6+p {
+  h1 + p,
+  h2 + p,
+  h3 + p,
+  h4 + p,
+  h5 + p,
+  h6 + p {
     margin-top: 0;
   }
 
   // TODO: Get better selector, lookup remark docs for footnote
-  sup>a {
+  sup > a {
     text-decoration: none;
 
-    &:after {
+    &::after {
       content: "]";
       color: inherit;
     }
 
-    &:before {
+    &::before {
       content: "[";
       color: inherit;
     }
@@ -126,7 +124,7 @@ figure {
 article :is(h1, h2, h3, h4, h5, h6) {
   position: relative;
 
-  &>a[aria-hidden="true"] {
+  & > a[aria-hidden="true"] {
     position: absolute;
     left: -1.25em;
     top: 0;
@@ -135,7 +133,9 @@ article :is(h1, h2, h3, h4, h5, h6) {
     align-items: center;
     text-decoration: none;
     opacity: 0.4;
-    transition: opacity 0.15s ease, color 0.15s ease;
+    transition:
+      opacity 0.15s ease,
+      color 0.15s ease;
 
     .icon-link {
       display: block;
@@ -158,7 +158,7 @@ article :is(h1, h2, h3, h4, h5, h6) {
     }
   }
 
-  &:hover>a[aria-hidden="true"] {
+  &:hover > a[aria-hidden="true"] {
     opacity: 0.7;
   }
 }

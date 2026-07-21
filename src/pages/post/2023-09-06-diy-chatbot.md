@@ -30,7 +30,7 @@ Chainlit is super easy to use, if you want an interactive app with most of the w
 
 If you create a file called `app.py`, pop this into it
 
-``` py
+```py
 import chainlit as cl
 
 @cl.on_message
@@ -40,7 +40,7 @@ async def main(message: str):
 
 and then run the following command
 
-``` sh
+```sh
 chainlit run app.py -w
 ```
 
@@ -48,7 +48,7 @@ The `-w` flag turns on auto-reloading, so you can edit `app.py` and it'll update
 
 ## LangChain
 
-``` py
+```py
 from langchain.llms import LlamaCpp
 
 llm = LlamaCpp(
@@ -88,7 +88,7 @@ produces
 
 Now if we stick them together, we find this, a pretty simple minimal working example for a chat bot.
 
-``` py
+```py
 import chainlit as cl
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain

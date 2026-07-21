@@ -10,7 +10,7 @@ digraph graphname {
     sin [ xlabel="w&#8323;" ]
     plus [ xlabel="w&#8325;" ]
     mul [ xlabel="w&#8324;" ]
-    
+
 
     // Names
     plus [ label="+" ]

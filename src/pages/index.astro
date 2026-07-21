@@ -1,16 +1,9 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
+import { getPosts, byDateDescending } from "../lib/posts";
 
-const postModules = import.meta.glob("./post/**/*.{md,mdx}", { eager: true });
-const posts = Object.values(postModules)
-  .filter((post) => !post.frontmatter?.draft)
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.datePublished).getTime() -
-      new Date(a.frontmatter.datePublished).getTime()
-  )
-  .slice(0, 3);
+const posts = getPosts().sort(byDateDescending).slice(0, 3);
 ---
 
 <PageLayout>
@@ -18,11 +11,15 @@ const posts = Object.values(postModules)
     <div class="hero__text">
       <h1><span class="highlight">Hi,</span> I'm John 👋</h1>
       <p class="lede">
-        I'm an Optical Engineer in Belfast, currently at <a href="//andor.com/">Andor</a>.
-        PhD Physics with interests in optics, holography, and computational imaging.
+        I'm an Optical Engineer in Belfast, currently at <a href="//andor.com/"
+          >Andor</a
+        >. PhD Physics with interests in optics, holography, and computational
+        imaging.
       </p>
       <p>
-        I spend my spare time writing about science and tech on my <a href="/post">blog</a>.
+        I spend my spare time writing about science and tech on my <a
+          href="/post">blog</a
+        >.
       </p>
       <div class="social-row">
         <a
@@ -89,7 +86,7 @@ const posts = Object.values(postModules)
     gap: 2rem;
     padding: 2rem 0 3rem;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (width >= 768px) {
       grid-template-columns: 3fr 2fr;
       gap: 3rem;
       padding: 3rem 0 4rem;
@@ -105,7 +102,7 @@ const posts = Object.values(postModules)
       font-size: 2.75rem;
       margin: 0;
 
-      @media screen and (min-width: 768px) {
+      @media screen and (width >= 768px) {
         font-size: 3.5rem;
       }
     }
@@ -129,7 +126,7 @@ const posts = Object.values(postModules)
     display: flex;
     justify-content: center;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (width >= 768px) {
       order: 1;
       justify-content: flex-end;
     }
@@ -141,7 +138,7 @@ const posts = Object.values(postModules)
       object-fit: cover;
       border-radius: 1rem;
 
-      @media screen and (min-width: 768px) {
+      @media screen and (width >= 768px) {
         width: 100%;
       }
     }
@@ -190,7 +187,7 @@ const posts = Object.values(postModules)
     grid-template-columns: 1fr;
     gap: 1.25rem;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (width >= 768px) {
       grid-template-columns: repeat(3, 1fr);
     }
   }
@@ -204,11 +201,13 @@ const posts = Object.values(postModules)
     background-color: var(--background-secondary);
     text-decoration: none;
     color: var(--text-primary);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
     }
 
     h3 {

@@ -66,8 +66,7 @@ $$
 <maths mode="display" xmlns="http://www.w3.org/1998/maths/MathML">
   <mrow>
     <mi> x </mi>
-    <mo> &#x2061; </mo
-    ><!--Function application-->
+    <mo> &#x2061; </mo><!--Function application-->
     <mrow>
       <mo> ( </mo>
       <mi> a </mi>

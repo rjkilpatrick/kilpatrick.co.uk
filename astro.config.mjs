@@ -7,9 +7,6 @@ import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
-import react from "@astrojs/react";
-
-// https://astro.build/config
 import remarkMath from "remark-math";
 
 // https://astro.build/config
@@ -44,14 +41,7 @@ export default defineConfig({
   site: "https://kilpatrick.co.uk",
   base: "",
   prefetch: true,
-  integrations: [
-    mdx(),
-    react(),
-    sitemap({
-      customPages: ["https://kilpatrick.co.uk/virtual-window"],
-    }),
-    icon(),
-  ],
+  integrations: [mdx(), sitemap(), icon()],
   markdown: {
     processor: unified({
       remarkPlugins: [remarkMath, remarkReadingTime],

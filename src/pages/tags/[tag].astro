@@ -2,25 +2,16 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 
 import PostPreview from "../../components/PostPreview.astro";
+import {
+  getPosts,
+  getUniqueTags,
+  byDateDescending,
+  type Post,
+} from "../../lib/posts";
 
 export async function getStaticPaths() {
-  const postModules = import.meta.glob("../post/**/*.{md,mdx}", {
-    eager: true,
-  });
-  const posts = Object.values(postModules).filter(
-    (post) => !post.frontmatter?.draft
-  );
-
-  // Remove duplicates
-  const makeUnique = (list) => [...new Set(list)];
-
-  const uniqueTags = makeUnique(
-    // Get flattened list of all tags in the posts
-    posts
-      .map((post) => post.frontmatter.tags)
-      .flat()
-      .filter((tag) => tag) // Remove undefined values
-  );
+  const posts = getPosts();
+  const uniqueTags = getUniqueTags(posts);
 
   return uniqueTags.map((tag) => {
     const filteredPosts = posts.filter((post) =>
@@ -33,6 +24,10 @@ export async function getStaticPaths() {
   });
 }
 
+interface Props {
+  posts: Post[];
+}
+
 const { posts } = Astro.props; // Note these are filtered posts
 const { tag } = Astro.params;
 ---
@@ -40,15 +35,6 @@ const { tag } = Astro.params;
 <PageLayout title={tag}>
   <h1>#{tag}</h1>
   <section>
-    {
-      posts
-        // Reverse chronological order
-        .sort(
-          (a, b) =>
-            new Date(b.frontmatter.datePublished).getTime() -
-            new Date(a.frontmatter.datePublished).getTime()
-        )
-        .map((post) => <PostPreview post={post} />)
-    }
+    {posts.sort(byDateDescending).map((post) => <PostPreview post={post} />)}
   </section>
 </PageLayout>

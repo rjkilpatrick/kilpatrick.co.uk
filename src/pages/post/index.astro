@@ -2,12 +2,9 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 
 import PostPreview from "../../components/PostPreview.astro";
+import { getPosts, byDateDescending } from "../../lib/posts";
 
-// TODO: Export this to the tags page to stop code re-use
-const postModules = import.meta.glob("./**/*.{md,mdx}", { eager: true });
-const posts = Object.values(postModules).filter(
-  (post) => !post.frontmatter?.draft
-);
+const posts = getPosts().sort(byDateDescending);
 
 const title = "Blog";
 ---
@@ -20,14 +17,7 @@ const title = "Blog";
   <section>
     {
       posts.length ? (
-        posts
-          // Reverse chronological order
-          .sort(
-            (a, b) =>
-              new Date(b.frontmatter.datePublished).getTime() -
-              new Date(a.frontmatter.datePublished).getTime()
-          )
-          .map((post) => <PostPreview post={post} />)
+        posts.map((post) => <PostPreview post={post} />)
       ) : (
         <p>No posts here, come back later!</p>
       )
@@ -50,7 +40,7 @@ const title = "Blog";
       margin: 0;
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (width >= 768px) {
       padding: 3rem 0 1.5rem;
 
       h1 {

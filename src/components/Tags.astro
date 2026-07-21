@@ -1,4 +1,8 @@
 ---
+export interface Props {
+  tags?: string[];
+}
+
 const { tags } = Astro.props;
 ---
 
@@ -31,7 +35,9 @@ const { tags } = Astro.props;
       color: var(--text-secondary);
       font-size: 0.85rem;
       text-decoration: none;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 
       &:hover {
         background-color: var(--accent-1);

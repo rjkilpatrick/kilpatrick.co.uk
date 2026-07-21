@@ -9,6 +9,10 @@ on:
   push:
     branches: ["main", "master"]
 
+  # Runs on pull requests so lint/format/type errors are caught before merge
+  pull_request:
+    branches: ["main", "master"]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -28,8 +32,29 @@ env:
   # BUILD_PATH: subfolder
 
 jobs:
+  lint:
+    name: Lint, format, and typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo with git
+        uses: actions/checkout@v7
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check formatting
+        run: npm run format:check
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+
   build:
     name: Build
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo with git
@@ -42,6 +67,7 @@ jobs:
           # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
 
   deploy:
+    if: github.event_name == 'push'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

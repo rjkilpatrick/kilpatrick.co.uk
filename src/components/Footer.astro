@@ -49,14 +49,13 @@ import { Icon } from "astro-icon/components";
     max-width: 80ch;
     margin: 0 auto;
     padding: 2rem 1.5rem;
-
     display: flex;
     flex-direction: column-reverse;
     gap: 1.25rem;
     align-items: center;
     text-align: center;
 
-    @media screen and (min-width: 600px) {
+    @media screen and (width >= 600px) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;

@@ -14,21 +14,20 @@ const waveItems = 24;
     position: fixed;
     width: 100vw;
     height: 100vh;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: 0;
     z-index: 999;
-    background-color: aliceblue;
+    background-color: var(--background-primary);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     &.active {
       @media (prefers-reduced-motion: no-preference) {
         animation: 500ms ease-in forwards fadeout;
       }
     }
+
     &.display_none {
       display: none;
     }
@@ -47,6 +46,7 @@ const waveItems = 24;
       height: 100vh;
       opacity: 1;
     }
+
     to {
       height: 0;
       opacity: 0;
@@ -58,14 +58,13 @@ const waveItems = 24;
     width: 0.25rem;
     height: 4rem;
     margin: 0 0.25rem;
-
-    background: black;
+    background: var(--text-emph);
 
     // Animations
     transform-origin: top center;
     animation: cosine 2000ms linear infinite;
 
-    // TODO: This is **awful** code, change this
+    // Must match `waveItems` above — Sass can't read the Astro frontmatter value.
     @for $i from 1 through 24 {
       &:nth-child(#{$i}) {
         animation-delay: calc(1.5 * (-24 + ($i - 1)) * 2000ms / 24);
@@ -77,19 +76,21 @@ const waveItems = 24;
     0% {
       transform: rotateX(0deg);
     }
+
     100% {
       transform: rotateX(360deg);
     }
   }
 </style>
-<script type="text/javascript">
+<script is:inline>
   window.onload = async () => {
     const overlay = document.querySelector("#loading-overlay");
+    if (!overlay) return;
     overlay.classList.add("active");
 
-    // This is a hack to display none after the animation is run, because of
-    // poor CSS. TODO: Remove this
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Hard-coded animation timer
+    // The fade-out is a CSS animation; wait for it to finish before hiding
+    // the overlay outright, since `display: none` can't itself be animated.
+    await new Promise((resolve) => setTimeout(resolve, 500));
     overlay.classList.add("display_none");
   };
 </script>

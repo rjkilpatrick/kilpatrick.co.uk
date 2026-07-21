@@ -4,8 +4,8 @@ body {
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -17,16 +17,14 @@ body {
   font-family: var(--font-main);
   line-height: 1.6;
   text-align: left;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "kern";
   font-kerning: normal;
-  word-wrap: break-word;
   overflow-wrap: break-word;
   background-color: var(--background-primary);
   color: var(--text-primary);
   padding: 0;
   margin: 0;
-
   align-items: center;
 
   // Sticky footer
@@ -41,14 +39,12 @@ body {
   padding: 0 1.5rem;
   width: 100%;
   flex-grow: 1;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
 // Taken from https://webaim.org/techniques/css/invisiblecontent
 .screen-reader {
-  clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
   height: 1px;
   width: 1px;
@@ -70,7 +66,6 @@ img {
   }
 
   * {
-    -webkit-animation: none !important;
     animation: none !important;
     transition: none !important;
   }
@@ -78,32 +73,30 @@ img {
 
 // Colours
 // Accent colours
-$red: hsl(345, 46%, 44%);
-$orange: hsl(28, 75%, 42%);
-$yellow: hsl(43, 83%, 40%);
-$green: hsl(155, 48%, 44%);
-$cyan: hsl(188, 56%, 42%);
-$blue: hsl(204, 58%, 44%);
-$violet: hsl(228, 37%, 54%);
-$magenta: hsl(340, 26%, 52%);
-$white: hsl(320, 0%, 81%);
+$red: hsl(345deg 46% 44%);
+$orange: hsl(28deg 75% 42%);
+$yellow: hsl(43deg 83% 40%);
+$green: hsl(155deg 48% 44%);
+$cyan: hsl(188deg 56% 42%);
+$blue: hsl(204deg 58% 44%);
+$violet: hsl(228deg 37% 54%);
+$magenta: hsl(340deg 26% 52%);
+$white: hsl(320deg 0% 81%);
 
 // Page colours
-$dark-background-primary: hsl(320, 4%, 16%);
-$dark-background-secondary: hsl(320, 4%, 22%);
-$dark-text-primary: hsl(320, 4%, 92%);
-$dark-text-secondary: hsl(320, 4%, 84%);
-$dark-text-emph: hsl(320, 4%, 99%);
+$dark-background-primary: hsl(320deg 4% 16%);
+$dark-background-secondary: hsl(320deg 4% 22%);
+$dark-text-primary: hsl(320deg 4% 92%);
+$dark-text-secondary: hsl(320deg 4% 84%);
+$dark-text-emph: hsl(320deg 4% 99%);
+$dark-text-hyperlink: $magenta; // hsl(188, 49.8%, 60%);
 
-$dark-text-hyperlink: $magenta; //hsl(188, 49.8%, 60%);
-
-$light-background-primary: hsl(320, 0%, 99%);
-$light-background-secondary: hsl(320, 0%, 90%);
-$light-text-primary: hsl(320, 0%, 26%); //hsl(320, 4%, 16%);
-$light-text-secondary: hsl(320, 0%, 36%);
-$light-text-emph: hsl(320, 0%, 4%);
-
-$light-text-hyperlink: $blue; //hsl(233, 57%, 47%);
+$light-background-primary: hsl(320deg 0% 99%);
+$light-background-secondary: hsl(320deg 0% 90%);
+$light-text-primary: hsl(320deg 0% 26%); // hsl(320, 4%, 16%);
+$light-text-secondary: hsl(320deg 0% 36%);
+$light-text-emph: hsl(320deg 0% 4%);
+$light-text-hyperlink: $blue; // hsl(233, 57%, 47%);
 
 // Organise themings
 $primary1: $red;
@@ -128,10 +121,8 @@ $tertiary3: $orange;
 
   // Light mode:
   --color-mode: "light"; // Not currently needed, JS export
-
   --background-primary: #{$light-background-primary};
   --background-secondary: #{$light-background-secondary};
-
   --text-primary: #{$light-text-primary};
   --text-secondary: #{$light-text-secondary};
   --text-emph: #{$light-text-emph};
@@ -141,10 +132,8 @@ $tertiary3: $orange;
 @media (prefers-color-scheme: dark) {
   :root {
     --color-mode: "dark"; // Not currently needed, JS export
-
     --background-primary: #{$dark-background-primary};
     --background-secondary: #{$dark-background-secondary};
-
     --text-primary: #{$dark-text-primary};
     --text-secondary: #{$dark-text-secondary};
     --text-emph: #{$dark-text-emph};
@@ -153,12 +142,28 @@ $tertiary3: $orange;
 }
 
 // Fonts
-//TODO: Consider moving to only system fonts
-//TODO: Consider moving to 2 fonts only
+// TODO: Consider moving to only system fonts
+// TODO: Consider moving to 2 fonts only
 
-$font-main: 'Inter', Ubuntu, -apple-system, Noto Sans, Helvetica, serif;
-$font-heading: 'Epilogue', -apple-system, Noto Sans, Helvetica, serif;
-$font-mono: "Space Mono", Liberation Mono, Menlo, Consolas, Monospace;
+$font-main:
+  "Inter",
+  ubuntu,
+  -apple-system,
+  noto sans,
+  helvetica,
+  serif;
+$font-heading:
+  "Epilogue",
+  -apple-system,
+  noto sans,
+  helvetica,
+  serif;
+$font-mono:
+  "Space Mono",
+  liberation mono,
+  menlo,
+  consolas,
+  monospace;
 
 :root {
   --font-main: #{$font-main};

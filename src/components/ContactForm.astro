@@ -20,7 +20,7 @@ const { formId } = Astro.props;
         name="email"
         id="email-address"
         placeholder="hello@example.com"
-        required=""
+        required
         class="form-input-required"
       />
       <label for="message" class="form-text-required">Message</label>
@@ -28,8 +28,10 @@ const { formId } = Astro.props;
         rows="5"
         name="message"
         id="message"
-        placeholder="Hi John\n\nI have an idea about..."
-        required=""></textarea>
+        placeholder="Hi John
+
+I have an idea about..."
+        required></textarea>
     </fieldset>
     <button form="fs-frm" type="submit" role="button">Submit</button>
   </form>
@@ -69,8 +71,9 @@ const { formId } = Astro.props;
   button,
   textarea,
   #card-element {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--background-secondary);
+    background-color: var(--background-primary);
+    color: var(--text-primary);
     padding: 0.75rem 1rem;
     margin-bottom: 1.5rem;
   }
@@ -78,10 +81,7 @@ const { formId } = Astro.props;
   input:focus,
   button:focus,
   textarea:focus {
-    background-color: white;
-    outline-style: solid;
-    outline-width: thin;
-    outline-color: gray;
+    outline: var(--text-secondary) solid thin;
     outline-offset: -1px;
   }
 
@@ -94,7 +94,7 @@ const { formId } = Astro.props;
   [type="submit"] {
     width: auto;
     cursor: pointer;
-    appearance: button;
+    appearance: auto;
   }
 
   [type="button"]:focus,
@@ -118,9 +118,10 @@ const { formId } = Astro.props;
   .form-text-required {
     &::after {
       content: "*";
-      color: rgb(171, 0, 0);
+      color: var(--accent-1);
     }
   }
+
   // snackbar
   #form-snackbar {
     visibility: hidden;
@@ -128,20 +129,21 @@ const { formId } = Astro.props;
     position: fixed;
     bottom: 32px;
     transform: translate(-50%, 0);
-
     min-width: 10rem;
-
     z-index: 1;
     border-radius: 2px;
     padding: 16px;
-
     background-color: var(--text-primary);
     color: var(--background-primary);
     text-align: center;
+
     .show {
       visibility: visible;
+
       @media (prefers-reduced-motion: no-preference) {
-        animation: ease-out fadein 0.5s, ease-in fadeout 0.5s 2.5s;
+        animation:
+          ease-out fadein 0.5s,
+          ease-in fadeout 0.5s 2.5s;
       }
     }
   }
@@ -151,6 +153,7 @@ const { formId } = Astro.props;
       bottom: 0;
       opacity: 0;
     }
+
     to {
       bottom: 30px;
       opacity: 1;
@@ -162,6 +165,7 @@ const { formId } = Astro.props;
       bottom: 30px;
       opacity: 1;
     }
+
     to {
       bottom: 0;
       opacity: 0;
@@ -170,19 +174,21 @@ const { formId } = Astro.props;
 </style>
 
 <script>
-  const form = document.getElementById("fs-frm");
+  const form = document.getElementById("fs-frm") as HTMLFormElement | null;
   const snackbar = document.getElementById("form-snackbar");
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: SubmitEvent) {
+    if (!form || !snackbar) return;
+
     event.preventDefault();
     snackbar.textContent = "Attempting to send form";
     snackbar.classList.add("show");
     setTimeout(() => {
       snackbar.classList.remove("show");
     }, 3000);
-    let data = new FormData(event.target);
+    const data = new FormData(form);
     form.reset();
-    fetch(event.target.action, {
+    fetch(form.action, {
       method: form.method,
       body: data,
       headers: {
@@ -197,7 +203,7 @@ const { formId } = Astro.props;
           response.json().then((data) => {
             if (Object.hasOwn(data, "errors")) {
               snackbar.textContent = data["errors"]
-                .map((error) => error["message"])
+                .map((error: { message: string }) => error.message)
                 .join(", ");
             } else {
               snackbar.textContent =
@@ -211,5 +217,5 @@ const { formId } = Astro.props;
         console.error(error);
       });
   }
-  form.addEventListener("submit", handleSubmit);
+  form?.addEventListener("submit", handleSubmit);
 </script>

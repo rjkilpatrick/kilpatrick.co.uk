@@ -1,8 +1,13 @@
 ---
+import Tags from "./Tags.astro";
+import type { Post } from "../lib/posts";
+
+export interface Props {
+  post: Post;
+}
+
 const { url, frontmatter } = Astro.props.post;
 const { title, preview, tags, datePublished, minutesRead } = frontmatter;
-
-import Tags from "./Tags.astro";
 ---
 
 <article class="post-card">
