@@ -4,7 +4,8 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import PostPreview from "../../components/PostPreview.astro";
 
 // TODO: Export this to the tags page to stop code re-use
-const posts = (await Astro.glob("./**/*.{md,mdx}")).filter(
+const postModules = import.meta.glob("./**/*.{md,mdx}", { eager: true });
+const posts = Object.values(postModules).filter(
   (post) => !post.frontmatter?.draft
 );
 

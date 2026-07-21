@@ -4,7 +4,10 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import PostPreview from "../../components/PostPreview.astro";
 
 export async function getStaticPaths() {
-  const posts = (await Astro.glob("../post/**/*.{md,mdx}")).filter(
+  const postModules = import.meta.glob("../post/**/*.{md,mdx}", {
+    eager: true,
+  });
+  const posts = Object.values(postModules).filter(
     (post) => !post.frontmatter?.draft
   );
 

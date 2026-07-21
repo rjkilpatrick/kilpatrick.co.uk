@@ -1,6 +1,9 @@
 import { defineConfig } from "astro/config";
 
 // https://astro.build/config
+import { unified } from "@astrojs/markdown-remark";
+
+// https://astro.build/config
 import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
@@ -22,26 +25,29 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
-import prefetch from "@astrojs/prefetch";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://kilpatrick.co.uk",
   base: "",
+  prefetch: true,
   integrations: [
     mdx(),
     react(),
     sitemap({
       customPages: ["https://kilpatrick.co.uk/virtual-window"],
     }),
-    prefetch(),
+    icon(),
   ],
   markdown: {
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex, rehypeSlug, rehypeAutolinkHeadings],
-    remarkRehype: {
-      footnoteLabel: "References",
-    },
+    processor: unified({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex, rehypeSlug, rehypeAutolinkHeadings],
+      remarkRehype: {
+        footnoteLabel: "References",
+      },
+    }),
     shikiConfig: {
       theme: "dracula",
     },
