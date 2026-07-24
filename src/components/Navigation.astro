@@ -3,6 +3,7 @@ const links = [
   { title: "Home", url: "/" },
   { title: "Blog", url: "/post" },
   { title: "About", url: "/about" },
+  { title: "CV", url: "/cv" },
   { title: "Contact", url: "/contact" },
 ];
 
@@ -54,6 +55,10 @@ const isActive = (url: string) =>
     width: 100%;
     background-color: var(--background-primary);
     border-bottom: 1px solid var(--background-secondary);
+
+    @media print {
+      display: none;
+    }
   }
 
   .nav-bar {

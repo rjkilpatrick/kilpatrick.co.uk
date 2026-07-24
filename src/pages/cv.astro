@@ -1,0 +1,352 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+
+const title = "CV";
+const description =
+  "CV for John Kilpatrick — Optical Engineer @ Oxford Instruments Andor, PhD Physics.";
+---
+
+<PageLayout title={title} description={description}>
+  <div class="print-bar">
+    <p>Prefer a PDF? Use your browser's print dialog and save as PDF.</p>
+    <button class="print-button" id="print-btn" type="button">
+      Print / Save as PDF
+    </button>
+  </div>
+
+  <article class="cv-page">
+    <header class="cv-header">
+      <h1>John Kilpatrick</h1>
+      <p class="cv-tagline">Optical Engineer &middot; PhD Physics</p>
+      <p class="cv-links">
+        Belfast &nbsp;&middot;&nbsp;
+        <a href="/contact">Contact me</a>
+        &nbsp;&middot;&nbsp;
+        <a rel="external" href="//linkedin.com/in/rjkilpatrick">LinkedIn</a>
+      </p>
+    </header>
+
+    <section class="cv-summary">
+      <p>
+        Optical Engineer at Oxford Instruments Andor with over a year of
+        experience, seeking new opportunities beginning July 2025. Contributing
+        to the development of accurate automated testing for cameras.
+        Collaborated with cross-functional teams to optimize hardware control,
+        data analysis, and continuous testing platforms, ensuring rapid and
+        reliable tests. With a PhD in Physics and a strong background in
+        fundamental optics, data processing, and experimental design, driven to
+        bridge research and applied engineering. Passionate about delivering
+        innovative solutions that enhance quality control processes and advance
+        cutting-edge optical technologies. Available to work anywhere in the UK
+        or EU.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="cv-entry">
+        <div class="cv-entry__head">
+          <h3>Optical Engineer &middot; Oxford Instruments Andor</h3>
+          <span class="cv-dates">May 2024 &ndash; Present</span>
+        </div>
+        <ul>
+          <li>
+            Provided continuous support to live products through the factory for
+            the iStar, iXon, and iVac camera platforms.
+          </li>
+          <li>
+            Supported continuous performance improvements for incremental
+            product improvements.
+          </li>
+          <li>
+            Collaborated within a cross-functional team to maintain a robust
+            quality test suite for existing products, focusing on scalable,
+            production-ready solutions for performance validation.
+          </li>
+          <li>
+            Refined optical test procedures and automated performance validation
+            used in manufacturing, ensuring high product quality and consistency
+            across volume production through the factory.
+          </li>
+          <li>
+            Performed in-depth optical characterization and diagnostics to
+            resolve complex system-level issues, enhancing the reliability and
+            imaging capabilities of high-sensitivity detectors.
+          </li>
+          <li>
+            Contribute to enhancement roadmaps for core product lines, aligning
+            test development with evolving customer and scientific requirements
+            in spectroscopy, microscopy, and time-resolved applications.
+          </li>
+          <li>
+            Promptly responding to customer queries with deep technical insight.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+
+      <div class="cv-entry">
+        <div class="cv-entry__head">
+          <h3>PhD Physics &middot; University of Exeter</h3>
+          <span class="cv-dates">Sept. 2020 &ndash; May 2024</span>
+        </div>
+        <p>
+          Research focused on imaging through multimode optical fibres for
+          next-generation flexible micro-endoscopes. Developed numerical
+          simulations to enhance control over light propagation in multimode
+          fibres and experimentally verified results. Presented a talk at
+          Frontiers in Optics 2022 and posters at several international
+          conferences.
+        </p>
+        <ul>
+          <li>
+            Used Python, MATLAB, and LabVIEW for detailed analysis and
+            modelling, aligning experimental results with theoretical
+            predictions.
+          </li>
+          <li>
+            Worked independently to troubleshoot complex experimental and
+            computational challenges.
+          </li>
+          <li>
+            Strong technical writing and critical thinking applied across a
+            range of research scenarios.
+          </li>
+          <li>
+            Managed research objectives, set timelines, and oversaw budget
+            planning.
+          </li>
+        </ul>
+
+        <h4>Teaching &amp; Outreach</h4>
+        <ul>
+          <li>
+            <strong>Teaching Assistant (2021&ndash;2023):</strong> Supported undergraduate
+            teaching in scientific programming (Python). Explained complex ideas clearly,
+            marked assignments, and provided constructive feedback.
+          </li>
+          <li>
+            <strong
+              >President, Exeter Photonics Society (2022&ndash;2023):</strong
+            >
+            Revamped branding, organized and chaired online talks with international
+            speakers, and led a company visit to Effect Photonics. Presented research
+            at the Torbay Hi-Tech Cluster. Organized and ran public outreach events:
+            stalls at the IOP Festival of Physics (2021) and Pint of Science (2022);
+            chaired talks at Pint of Science 2023. Organized a stargazing trip to
+            Dartmoor for over 60 people.
+          </li>
+        </ul>
+      </div>
+
+      <div class="cv-entry">
+        <div class="cv-entry__head">
+          <h3>
+            MPhys Physics, with study in New Zealand &middot; University of
+            Exeter
+          </h3>
+          <span class="cv-dates">2016 &ndash; 2020</span>
+        </div>
+        <p>
+          First-class honours. Research project aimed to use Raman spectroscopy
+          to detect breast cancer in situ. Relevant modules include Scientific
+          Programming in C (95%), Computer Graphics (91%), and Advanced Web
+          Development (90%).
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <ul class="cv-skills">
+        <li>Python programming</li>
+        <li>Statistical analysis</li>
+        <li>Data analysis &amp; visualisation</li>
+        <li>Optical experiment design</li>
+        <li>Presentation skills</li>
+        <li>Science communication</li>
+      </ul>
+    </section>
+  </article>
+</PageLayout>
+
+<script>
+  document
+    .getElementById("print-btn")
+    ?.addEventListener("click", () => window.print());
+</script>
+
+<style lang="scss">
+  .print-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 1.5rem 0;
+
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+  }
+
+  .print-button {
+    flex-shrink: 0;
+    padding: 0.6rem 1.25rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--accent-1);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .cv-page {
+    max-width: 210mm;
+    margin: 0 auto 3rem;
+    padding: 16mm;
+    background-color: white;
+    color: #1a1a1a;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 24px rgb(0 0 0 / 15%);
+
+    a {
+      color: #1a1a1a;
+    }
+  }
+
+  .cv-header {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      margin: 0;
+      font-size: 2.25rem;
+      color: #1a1a1a;
+    }
+  }
+
+  .cv-tagline {
+    margin: 0.25rem 0 0;
+    font-size: 1.1rem;
+    color: #444;
+  }
+
+  .cv-links {
+    margin: 0.5rem 0 0;
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  .cv-summary {
+    margin-bottom: 1.5rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  section + section {
+    margin-top: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    color: #1a1a1a;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.25rem;
+    margin-bottom: 1rem;
+    break-after: avoid;
+  }
+
+  h4 {
+    font-size: 1rem;
+    color: #1a1a1a;
+    margin: 1rem 0 0.35rem;
+    break-after: avoid;
+  }
+
+  .cv-entry {
+    + .cv-entry {
+      margin-top: 1.25rem;
+    }
+  }
+
+  .cv-entry__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    break-after: avoid;
+    break-inside: avoid;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #1a1a1a;
+    }
+  }
+
+  .cv-dates {
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: #555;
+    white-space: nowrap;
+  }
+
+  ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+
+    li {
+      margin-bottom: 0.35rem;
+      break-inside: avoid;
+    }
+  }
+
+  .cv-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    list-style: none;
+    padding-left: 0;
+
+    li {
+      margin: 0;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background-color: #f0f0f0;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media print {
+    .print-bar {
+      display: none;
+    }
+
+    .cv-page {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+
+  @page {
+    size: a4;
+    margin: 16mm;
+  }
+</style>
