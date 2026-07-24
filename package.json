@@ -46,5 +46,9 @@
     "stylelint-config-standard-scss": "^17.0.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "esbuild@0.28.1": true
   }
 }
